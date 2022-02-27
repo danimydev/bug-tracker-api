@@ -1,0 +1,28 @@
+{
+  "name": "bug-tracker-api",
+  "version": "1.0.0",
+  "description": "clean api for bug-tracker-apps",
+  "main": "./web/server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node ./web/server.js",
+    "dev": "nodemon ./web/server.js"
+  },
+  "keywords": [
+    "clean api",
+    "nodejs",
+    "bug tracker",
+    "express",
+    "jwt"
+  ],
+  "author": "daniel madrid",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
