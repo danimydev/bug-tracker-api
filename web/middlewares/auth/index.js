@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { JWTStrategy } = require('./jwtStrategy');
-const { memoryDatabase } = require('../../../database');
 const { LoginMiddleware } = require('./login');
+const { knexAdapter } = require('../../../database/adapters');
 const { VerifyMiddleware } = require('./verify');
 
 const secretKey = 'secret';
@@ -9,12 +9,12 @@ const secretKey = 'secret';
 const jwtStrategy = new JWTStrategy({
   jwt,
   secretKey,
-})
+});
 
 module.exports = {
   jwtLoginMiddleware: new LoginMiddleware({
     strategy: jwtStrategy,
-    database: memoryDatabase,
+    ormAdapter: knexAdapter,
   }),
   jwtVerifyMiddleware: new VerifyMiddleware({
     strategy: jwtStrategy,

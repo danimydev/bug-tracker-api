@@ -9,7 +9,6 @@ class VerifyMiddleware {
   execute(httpRequest) {
     try {
       const { authorization } = httpRequest.headers;
-      console.log(authorization);
       if (!authorization) {
         return {
           statusCode: 401,
@@ -19,10 +18,16 @@ class VerifyMiddleware {
       const user = this.#strategy.verify(authValue);
       return {
         statusCode: 201,
+        body: {
+          user,
+        }
       }
     } catch (error) {
       return {
         statusCode: 401,
+        body: {
+          error: JSON.stringify(error),
+        }
       }
     }
   }

@@ -1,36 +1,34 @@
-class CreateController {
+class CreateUserController {
 
-  #factory;
-  #database;
   #usecase;
 
-  constructor({ factory, database, usecase }) {
-    this.#factory = factory;
-    this.#database = database;
+  constructor({ usecase }) {
     this.#usecase = usecase;
   }
 
-  execute(httpRequest) {
+  async execute(httpRequest) {
+    try {
+      const { body } = httpRequest;
+      const user = await this.#usecase.execute(body);
 
-    const { body } = httpRequest;
-
-    const user = this.#usecase({
-      userFactory: this.#factory,
-      database: this.#database,
-      values: body,
-    });
-
-    return {
-      statusCode: 200,
-      body: {
-        user,
-      },
-    };
-
+      return {
+        statusCode: 201,
+        body: {
+          user,
+        },
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: {
+          error: JSON.stringify(error),
+        }
+      }
+    }
   }
 
 }
 
 module.exports = {
-  CreateController,
+  CreateUserController,
 }

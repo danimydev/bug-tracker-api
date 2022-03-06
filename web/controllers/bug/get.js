@@ -1,4 +1,4 @@
-class UpdateUserController {
+class GetBugController {
 
   #usecase;
 
@@ -9,14 +9,20 @@ class UpdateUserController {
   async execute(httpRequest) {
     try {
       const { id } = httpRequest.params;
-      const { body } = httpRequest;
-
-      const updated = await this.#usecase.execute({ id, ...body });
-
+      if (id) {
+        const bug = await this.#usecase.execute({ id });
+        return {
+          statusCode: 200,
+          body: {
+            bug,
+          }
+        }
+      }
+      const bugs = await this.#usecase.execute({});
       return {
         statusCode: 200,
         body: {
-          updated,
+          bugs,
         }
       }
     } catch (error) {
@@ -32,5 +38,5 @@ class UpdateUserController {
 }
 
 module.exports = {
-  UpdateUserController,
+  GetBugController,
 }

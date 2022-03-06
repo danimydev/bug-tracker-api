@@ -1,32 +1,34 @@
-class DeleteController {
+class DeleteBugController {
 
-  #database;
   #usecase;
 
-  constructor({ database, usecase }) {
-    this.#database = database;
+  constructor({ usecase }) {
     this.#usecase = usecase;
   }
 
-  execute(httpRequest) {
-    const { id } = httpRequest.params;
+  async execute(httpRequest) {
+    try {
+      const { id } = httpRequest.params;
+      const deleted = await this.#usecase.execute({ id });
 
-    const deleted = this.#usecase({
-      database: this.#database,
-      id,
-    });
-
-    return {
-      statusCode: 200,
-      body: {
-        deleted,
+      return {
+        statusCode: 200,
+        body: {
+          deleted,
+        }
+      }
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: {
+          error: JSON.stringify(error),
+        }
       }
     }
-
   }
 
 }
 
 module.exports = {
-  DeleteController,
+  DeleteBugController,
 }

@@ -1,4 +1,4 @@
-class GetUserBugsUseCase {
+class GetBugUseCase {
 
   #ormAdapter;
 
@@ -20,5 +20,5 @@ class GetUserBugsUseCase {
 }
 
 module.exports = {
-  GetUserBugsUseCase,
+  GetBugUseCase,
 }

@@ -1,36 +1,36 @@
-class CreateController {
+class CreateBugController {
 
-  #factory;
-  #database;
   #usecase;
 
-  constructor({ factory, database, usecase }) {
-    this.#factory = factory;
-    this.#database = database;
+  constructor({ usecase }) {
     this.#usecase = usecase;
   }
 
-  execute(httpRequest) {
+  async execute(httpRequest) {
+    try {
+      const { body } = httpRequest;
+      const created = await this.#usecase.execute(body);
 
-    const { body } = httpRequest;
+      return {
+        statusCode: 201,
+        body: {
+          created,
+        },
+      };
 
-    const bug = this.#usecase({
-      bugFactory: this.#factory,
-      database: this.#database,
-      values: body,
-    });
-
-    return {
-      statusCode: 200,
-      body: {
-        bug,
-      },
-    };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: {
+          error: JSON.stringify(error),
+        }
+      }
+    }
 
   }
 
 }
 
 module.exports = {
-  CreateController,
+  CreateBugController,
 }

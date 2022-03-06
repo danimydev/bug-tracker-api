@@ -5,7 +5,7 @@
   "main": "./web/server.js",
   "scripts": {
     "test": "jest",
-    "start": "node ./web/server.js",
+    "start": "nodemon ./web/server.js",
     "dev": "nodemon ./web/server.js"
   },
   "keywords": [
@@ -18,11 +18,14 @@
   "author": "daniel madrid",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "jest": "^27.5.1",
-    "jsonwebtoken": "^8.5.1"
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^1.0.3",
+    "pg": "^8.7.3"
   },
   "devDependencies": {
+    "jest": "^27.5.1",
     "nodemon": "^2.0.15"
   }
 }

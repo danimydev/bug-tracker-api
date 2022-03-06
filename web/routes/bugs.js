@@ -1,12 +1,18 @@
 const router = require('express').Router();
 const { makeExpressCallback, makeAuthMiddleware } = require('../adapt_request');
 const { jwtVerifyMiddleware } = require('../middlewares/auth');
-const { getById, getAll, create, update, destroy } = require('../controllers/bug');
+const { createBugController, getBugControler } = require('../controllers/bug');
 
-router.get('/', makeExpressCallback(getAll));
-router.get('/:id', makeExpressCallback(getById));
-router.post('/', makeAuthMiddleware(jwtVerifyMiddleware), makeExpressCallback(create));
-router.patch('/:id', makeAuthMiddleware(jwtVerifyMiddleware), makeExpressCallback(update));
-router.delete('/:id', makeAuthMiddleware(jwtVerifyMiddleware), makeExpressCallback(destroy));
+router.get('/',
+  makeAuthMiddleware(jwtVerifyMiddleware),
+  makeExpressCallback(getBugControler));
+
+router.get('/:id',
+  makeAuthMiddleware(jwtVerifyMiddleware),
+  makeExpressCallback(getBugControler));
+
+router.post('/',
+  makeAuthMiddleware(jwtVerifyMiddleware),
+  makeExpressCallback(createBugController));
 
 module.exports = router;

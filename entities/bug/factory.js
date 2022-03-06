@@ -1,12 +1,27 @@
 class BugFactory {
 
   #generateId;
+  #validateId;
 
-  constructor({ generateId }) {
+  constructor({ generateId, validateId }) {
     this.#generateId = generateId;
+    this.#validateId = validateId;
   }
 
-  createBug({ title, desc, type, priority, projectId, userId, completed }) {
+  create({ title, desc, type, priority, projectId, userId, completed = false }) {
+
+    if (title.trim().length < 4) {
+      throw new Error('bug title length mus be greater than 4');
+    }
+
+    if (!this.#validateId(projectId)) {
+      throw new Error('invalid projectId passed');
+    }
+
+    if (!this.#validateId(userId)) {
+      throw new Error('invalid userId passed');
+    }
+
     return {
       id: this.#generateId({ title, desc, type, priority }),
       title,

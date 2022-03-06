@@ -1,13 +1,28 @@
 const router = require('express').Router();
 const { makeExpressCallback, makeAuthMiddleware } = require('../adapt_request');
 const { jwtVerifyMiddleware } = require('../middlewares/auth');
-const { getById, getAll, create, update, destroy, getUserBugs } = require('../controllers/user');
 
-router.get('/', makeExpressCallback(getAll));
-router.get('/:id', makeExpressCallback(getById));
-router.get('/:id/bugs', makeExpressCallback(getUserBugs));
-router.post('/', makeExpressCallback(create));
-router.patch('/:id', makeAuthMiddleware(jwtVerifyMiddleware), makeExpressCallback(update));
-router.delete('/:id', makeAuthMiddleware(jwtVerifyMiddleware), makeExpressCallback(destroy));
+const {
+  getUserController,
+  getUserBugsController,
+  createUserController,
+  udpateUserController,
+  deleteUserController } = require('../controllers/user');
+
+router.get('/', makeExpressCallback(getUserController));
+
+router.get('/:id', makeExpressCallback(getUserController));
+
+router.get('/:id/bugs', makeExpressCallback(getUserBugsController));
+
+router.post('/', makeExpressCallback(createUserController));
+
+router.patch('/:id',
+  makeAuthMiddleware(jwtVerifyMiddleware),
+  makeExpressCallback(udpateUserController));
+
+router.delete('/:id',
+  makeAuthMiddleware(jwtVerifyMiddleware),
+  makeExpressCallback(deleteUserController));
 
 module.exports = router;

@@ -1,4 +1,4 @@
-class GetUserBugsUseCase {
+class GetUserUseCase {
 
   #ormAdapter;
 
@@ -9,7 +9,7 @@ class GetUserBugsUseCase {
   async execute(values) {
     try {
       return this.#ormAdapter.select({
-        table: 'bug',
+        table: 'user',
         values,
       });
     } catch (error) {
@@ -20,5 +20,5 @@ class GetUserBugsUseCase {
 }
 
 module.exports = {
-  GetUserBugsUseCase,
+  GetUserUseCase,
 }

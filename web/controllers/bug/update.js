@@ -1,34 +1,37 @@
-class UpdateController {
+class UpdateBugController {
 
-  #database;
   #usecase;
 
-  constructor({ database, usecase }) {
-    this.#database = database;
+  constructor({ usecase }) {
     this.#usecase = usecase;
   }
 
-  execute(httpRequest) {
-    const { id } = httpRequest.params;
-    const { body } = httpRequest;
+  async execute(httpRequest) {
+    try {
+      const { id } = httpRequest.params;
+      const { body } = httpRequest;
 
-    const updated = this.#usecase({
-      database: this.#database,
-      id,
-      values: body,
-    });
+      const updated = await this.#usecase.execute({
+        id,
+        ...body,
+      });
 
-    return {
-      statusCode: 200,
-      body: {
-        updated,
+      return {
+        statusCode: 200,
+        body: {
+          updated,
+        }
+      }
+    } catch (error) {
+      return {
+        statusCode: 500,
+        error: JSON.stringify(error),
       }
     }
-
   }
 
 }
 
 module.exports = {
-  UpdateController,
+  UpdateBugController,
 }

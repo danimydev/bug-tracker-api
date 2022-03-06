@@ -1,10 +1,10 @@
 function makeExpressCallback(controller) {
-  return (req, res) => {
+  return async (req, res) => {
     const httpRequest = {
       params: req.params,
       body: req.body,
     }
-    const { statusCode, body } = controller.execute(httpRequest);
+    const { statusCode, body } = await controller.execute(httpRequest);
     res.status(statusCode).json(body);
   }
 }

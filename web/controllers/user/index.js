@@ -1,45 +1,31 @@
-const { GetAllController } = require('./getAll');
-const { CreateController } = require('./create');
-const { GetByIdController } = require('./getById');
-const { UpdateController } = require('./update');
-const { DeleteController } = require('./delete');
-const { GetBugsController } = require('./getBugs');
+const { GetUserController } = require('./get');
+const { CreateUserController } = require('./create');
+const { UpdateUserController } = require('./update');
+const { DeleteUserController } = require('./delete');
+const { GetUserBugsController } = require('./getBugs');
 
-const { getUser } = require('../../../use_cases/user/getById');
-const { getAll } = require('../../../use_cases/user/getAll');
-const { createUser } = require('../../../use_cases/user/create');
-const { updateUser } = require('../../../use_cases/user/update');
-const { deleteUser } = require('../../../use_cases/user/delete');
-const { getBugs } = require('../../../use_cases/user/getBugs');
-
-const { memoryDatabase } = require('../../../database');
-
-const { userFactory } = require('../../../entities/user');
+const {
+  getUserUseCase,
+  getUserBugsUseCase,
+  createUserUseCase,
+  deleteUserUseCase,
+  updateUserUseCase,
+} = require('../../../use_cases/user');
 
 module.exports = {
-  getAll: new GetAllController({
-    database: memoryDatabase,
-    usecase: getAll,
+  getUserController: new GetUserController({
+    usecase: getUserUseCase,
   }),
-  getById: new GetByIdController({
-    database: memoryDatabase,
-    usecase: getUser,
+  getUserBugsController: new GetUserBugsController({
+    usecase: getUserBugsUseCase,
   }),
-  getBugs: new GetBugsController({
-    database: memoryDatabase,
-    usecase: getBugs,
+  createUserController: new CreateUserController({
+    usecase: createUserUseCase,
   }),
-  create: new CreateController({
-    database: memoryDatabase,
-    usecase: createUser,
-    factory: userFactory,
+  udpateUserController: new UpdateUserController({
+    usecase: updateUserUseCase,
   }),
-  update: new UpdateController({
-    database: memoryDatabase,
-    usecase: updateUser,
-  }),
-  destroy: new DeleteController({
-    database: memoryDatabase,
-    usecase: deleteUser,
+  deleteUserController: new DeleteUserController({
+    usecase: deleteUserUseCase,
   }),
 }

@@ -1,33 +1,34 @@
-class GetBugsController {
+class GetUserBugsController {
 
-  #database;
   #usecase;
 
-  constructor({ database, usecase }) {
-    this.#database = database;
+  constructor({ usecase }) {
     this.#usecase = usecase;
   }
 
-  execute(httpRequest) {
+  async execute(httpRequest) {
+    try {
+      const { id } = httpRequest.params;
+      const userBugs = await this.#usecase.execute({ id });
 
-    const { id } = httpRequest.params;
-
-    const projectBugs = this.#usecase({
-      database: this.#database,
-      id,
-    });
-
-    return {
-      statusCode: 200,
-      body: {
-        projectBugs,
+      return {
+        statusCode: 200,
+        body: {
+          userBugs,
+        }
+      };
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: {
+          error: JSON.stringify(error),
+        }
       }
-    };
-
+    }
   }
 
 }
 
 module.exports = {
-  GetBugsController,
+  GetUserBugsController,
 }
