@@ -4,15 +4,15 @@ const { jwtVerifyMiddleware } = require('../middlewares/auth');
 const { createBugController, getBugControler } = require('../controllers/bug');
 
 router.get('/',
-  makeAuthMiddleware(jwtVerifyMiddleware),
+  //makeAuthMiddleware(jwtVerifyMiddleware),
   makeExpressCallback(getBugControler));
 
 router.get('/:id',
-  makeAuthMiddleware(jwtVerifyMiddleware),
+  //makeAuthMiddleware(jwtVerifyMiddleware),
   makeExpressCallback(getBugControler));
 
 router.post('/',
-  makeAuthMiddleware(jwtVerifyMiddleware),
+  //makeAuthMiddleware(jwtVerifyMiddleware),
   makeExpressCallback(createBugController));
 
 module.exports = router;

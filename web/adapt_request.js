@@ -18,7 +18,7 @@ function makeAuthMiddleware(authMiddleware) {
     }
     const { statusCode } = authMiddleware.execute(httpRequest);
     if (statusCode === 401) {
-      res.status(statusCode).json('forbidden');
+      return res.status(statusCode).json('forbidden');
     }
     next();
   }
